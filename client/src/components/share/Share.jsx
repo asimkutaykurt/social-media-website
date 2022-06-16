@@ -22,8 +22,8 @@ export default function Share() {
         if (file) {
           const data = new FormData();
           const fileName = Date.now() + file.name;
-          data.append("file", file);
           data.append("name", fileName);
+          data.append("file", file);
           newPost.images = fileName;
           console.log(newPost);
           try {
