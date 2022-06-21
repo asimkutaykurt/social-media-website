@@ -5,11 +5,26 @@ import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import {logoutCall} from '../../apiCalls';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useNavigate } from "react-router-dom";
 
-function Topbar() {
-  const {user} = useContext(AuthContext)
+export default function Topbar() {
+  const {user, dispatch} = useContext(AuthContext)
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+
+    if(handleClick) {
+      try {
+        await logoutCall(dispatch);
+        localStorage.clear();
+        navigate("/login");
+    } catch (error) {}
+  }
+}
 
   return (
     <div className="topbar-container">
@@ -51,9 +66,11 @@ function Topbar() {
             <Link to={`/profile/${user.username}`}>
               <img src={ user.profilePicture ? PUBLIC_FOLDER + user.profilePicture : PUBLIC_FOLDER + "person/noAvatar.png"} alt="" className="topbar-img" />
             </Link>
+            <div className="logout-container" onClick={handleClick}>
+              <span className="topbar-link">Sign out</span>
+              <span className="topbar-link"><ExitToAppIcon /></span>
+            </div>
         </div>
     </div>
   )
 }
-
-export default Topbar

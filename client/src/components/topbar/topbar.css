@@ -94,3 +94,9 @@
     object-fit: cover;
     cursor: pointer;
 }
+
+.logout-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
